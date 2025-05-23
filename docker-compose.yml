@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   app:
     build:
@@ -10,7 +9,5 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    environment:
-      - NODE_ENV=development
-    stdin_open: true
-    tty: true
+    working_dir: /app
+    command: npm run dev
