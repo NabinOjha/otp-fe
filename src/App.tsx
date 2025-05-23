@@ -3,6 +3,7 @@ import PhoneInput from "./components/PhoneInput"
 import OtpInput from "./components/OtpInput"
 import NcellCenters from "./components/NcellCenters"
 import "./App.css"
+import axios from "axios"
 
 function App() {
   // Authentication states
@@ -19,53 +20,49 @@ function App() {
     setPhoneNumber(phone)
 
     try {
-      // Replace with your actual API endpoint
-      const response = await fetch("https://your-backend-api.com/send-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ phoneNumber: phone }),
-      })
+      const response = await axios.post('http://localhost:3000/otp/send', {data: { phone: phone }})
+      console.log(response)
 
-      const data = await response.json()
+      // const data = { message: "Some message"}
 
-      if (response.ok) {
-        setOtpSent(true)
-        setResendDisabled(true)
-        setResendTimer(60)
-      } else {
-        setError(data.message || "Failed to send OTP. Please try again.")
-      }
+    //   if (response) {
+    //     setOtpSent(true)
+    //     setResendDisabled(true)
+    //     setResendTimer(60)
+    //   } else {
+    //     setError(data.message || "Failed to send OTP. Please try again.")
+    //   }
     } catch (err) {
-      setError("Network error. Please check your connection and try again.")
+      console.log("Error", err)
+      // setError("Network error. Please check your connection and try again.")
     }
   }
 
   // Handle OTP verification
   const handleOtpVerify = async (otp: string) => {
     setError("")
+    setIsLoggedIn(true)
 
-    try {
-      // Replace with your actual API endpoint
-      const response = await fetch("https://your-backend-api.com/verify-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ phoneNumber, otp }),
-      })
+    // try {
+    //   // Replace with your actual API endpoint
+    //   const response = await fetch("https://your-backend-api.com/verify-otp", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ phoneNumber, otp }),
+    //   })
 
-      const data = await response.json()
+    //   const data = await response.json()
 
-      if (response.ok) {
-        setIsLoggedIn(true)
-      } else {
-        setError(data.message || "Invalid OTP. Please try again.")
-      }
-    } catch (err) {
-      setError("Network error. Please check your connection and try again.")
-    }
+    //   if (response.ok) {
+    //     setIsLoggedIn(true)
+    //   } else {
+    //     setError(data.message || "Invalid OTP. Please try again.")
+    //   }
+    // } catch (err) {
+    //   setError("Network error. Please check your connection and try again.")
+    // }
   }
 
   // Handle OTP resend

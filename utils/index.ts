@@ -17,3 +17,5 @@ export const isValidNcellNumber = (phoneNumber: string): boolean => {
 const validNumber = (phoneNumber: string) => {
   return /^9\d{9}$/.test(phoneNumber)
 }
+
+export const linearGradientClass  = 'bg-[linear-gradient(90deg,_#221e67_0%,_#5e1f70_24.95%,_#7a2976_48.4%,_#a3387d_82.83%,_#b63f81_100%)]'

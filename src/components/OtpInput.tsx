@@ -1,6 +1,7 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
+import {  linearGradientClass } from "../../utils"
 
 interface OtpInputProps {
   onVerify: (otp: string) => void
@@ -14,7 +15,6 @@ const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputP
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const [error, setError] = useState("")
 
-  // Focus on first input on component mount
   useEffect(() => {
     if (inputRefs.current[0]) {
       inputRefs.current[0].focus()
@@ -22,23 +22,20 @@ const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputP
   }, [])
 
   const handleChange = (index: number, value: string) => {
-    // Only allow numbers
     if (!/^\d*$/.test(value)) return
 
     const newOtp = [...otp]
     newOtp[index] = value.slice(0, 1)
     setOtp(newOtp)
 
-    // Auto-focus next input
     if (value && index < 5 && inputRefs.current[index + 1]) {
-      // inputRefs.current[index + 1].focus()
+      inputRefs.current[index + 1]?.focus()
     }
   }
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Move focus to previous input on backspace
     if (e.key === "Backspace" && !otp[index] && index > 0 && inputRefs.current[index - 1]) {
-      // inputRefs.current[index - 1].focus()
+      inputRefs.current[index - 1]?.focus()
     }
   }
 
@@ -46,12 +43,10 @@ const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputP
     e.preventDefault()
     const pastedData = e.clipboardData.getData("text/plain").trim()
 
-    // Check if pasted content is a 6-digit number
     if (/^\d{6}$/.test(pastedData)) {
       const newOtp = pastedData.split("")
       setOtp(newOtp)
 
-      // Focus on the last input
       if (inputRefs.current[5]) {
         inputRefs.current[5].focus()
       }
@@ -72,6 +67,8 @@ const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputP
     onVerify(otpValue)
   }
 
+  console.log(inputRefs)
+
   return (
     <div>
       <h2 className="text-lg font-medium mb-4">Enter verification code</h2>
@@ -89,7 +86,11 @@ const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputP
             {otp.map((digit, index) => (
               <input
                 key={index}
-                // ref={(el) => (inputinputRefs.current[index] = el)}
+                ref={(el)=> {
+                  if(inputRefs.current){
+                    inputRefs.current[index] = el
+                  }
+                }}
                 type="text"
                 inputMode="numeric"
                 maxLength={1}
@@ -109,7 +110,7 @@ const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputP
         <div className="flex flex-col gap-3">
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-colors"
+            className={`w-full ${linearGradientClass} bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-0 transition-colors`}
           >
             Verify OTP
           </button>
@@ -118,10 +119,10 @@ const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputP
             type="button"
             onClick={onResend}
             disabled={resendDisabled}
-            className={`w-full py-2 px-4 rounded-md border border-purple-300 text-purple-700 ${
+            className={`w-full py-2 px-4 rounded-md border border-[#b63f81] text-[#221e67] ${
               resendDisabled
                 ? "bg-gray-100 cursor-not-allowed opacity-70"
-                : "hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                : "hover:bg-purple-50 focus:outline-none focus:ring-2"
             } transition-colors`}
           >
             {resendDisabled ? `Resend OTP in ${resendTimer}s` : "Resend OTP"}
