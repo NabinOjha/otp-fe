@@ -1,79 +1,91 @@
-import type React from "react"
+import type React from 'react';
 
-import { useState, useRef, useEffect } from "react"
-import {  linearGradientClass } from "../../utils"
+import { useState, useRef, useEffect } from 'react';
+import { linearGradientClass } from '../../utils';
 
 interface OtpInputProps {
-  onVerify: (otp: string) => void
-  onResend: () => void
-  resendDisabled: boolean
-  resendTimer: number
+  onVerify: (otp: string) => void;
+  onResend: () => void;
+  resendDisabled: boolean;
+  resendTimer: number;
 }
 
-const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputProps) => {
-  const [otp, setOtp] = useState(["", "", "", "", "", ""])
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([])
-  const [error, setError] = useState("")
+const OtpInput = ({
+  onVerify,
+  onResend,
+  resendDisabled,
+  resendTimer,
+}: OtpInputProps) => {
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (inputRefs.current[0]) {
-      inputRefs.current[0].focus()
+      inputRefs.current[0].focus();
     }
-  }, [])
+  }, []);
 
   const handleChange = (index: number, value: string) => {
-    if (!/^\d*$/.test(value)) return
+    if (!/^\d*$/.test(value)) return;
 
-    const newOtp = [...otp]
-    newOtp[index] = value.slice(0, 1)
-    setOtp(newOtp)
+    const newOtp = [...otp];
+    newOtp[index] = value.slice(0, 1);
+    setOtp(newOtp);
 
     if (value && index < 5 && inputRefs.current[index + 1]) {
-      inputRefs.current[index + 1]?.focus()
+      inputRefs.current[index + 1]?.focus();
     }
-  }
+  };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0 && inputRefs.current[index - 1]) {
-      inputRefs.current[index - 1]?.focus()
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (
+      e.key === 'Backspace' &&
+      !otp[index] &&
+      index > 0 &&
+      inputRefs.current[index - 1]
+    ) {
+      inputRefs.current[index - 1]?.focus();
     }
-  }
+  };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    const pastedData = e.clipboardData.getData("text/plain").trim()
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData('text/plain').trim();
 
     if (/^\d{6}$/.test(pastedData)) {
-      const newOtp = pastedData.split("")
-      setOtp(newOtp)
+      const newOtp = pastedData.split('');
+      setOtp(newOtp);
 
       if (inputRefs.current[5]) {
-        inputRefs.current[5].focus()
+        inputRefs.current[5].focus();
       }
     }
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const otpValue = otp.join("")
+    const otpValue = otp.join('');
 
     if (otpValue.length !== 6) {
-      setError("Please enter all 6 digits of the OTP")
-      return
+      setError('Please enter all 6 digits of the OTP');
+      return;
     }
 
-    setError("")
-    onVerify(otpValue)
-  }
-
-  console.log(inputRefs)
+    setError('');
+    onVerify(otpValue);
+  };
 
   return (
     <div>
       <h2 className="text-lg font-medium mb-4">Enter verification code</h2>
       <p className="text-sm text-gray-600 mb-4">
-        We've sent a 6-digit code to your phone number. Please enter it below.
+        We&apos;ve sent a 6-digit code to your phone number. Please enter it
+        below.
       </p>
 
       <form onSubmit={handleSubmit}>
@@ -86,17 +98,17 @@ const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputP
             {otp.map((digit, index) => (
               <input
                 key={index}
-                ref={(el)=> {
-                  if(inputRefs.current){
-                    inputRefs.current[index] = el
+                ref={el => {
+                  if (inputRefs.current) {
+                    inputRefs.current[index] = el;
                   }
                 }}
                 type="text"
                 inputMode="numeric"
                 maxLength={1}
                 value={digit}
-                onChange={(e) => handleChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(index, e)}
+                onChange={e => handleChange(index, e.target.value)}
+                onKeyDown={e => handleKeyDown(index, e)}
                 onPaste={index === 0 ? handlePaste : undefined}
                 className="w-12 h-12 text-center text-xl font-semibold border border-gray-300 rounded-md focus:border-purple-500 focus:ring-purple-500"
                 required
@@ -121,16 +133,16 @@ const OtpInput = ({ onVerify, onResend, resendDisabled, resendTimer }: OtpInputP
             disabled={resendDisabled}
             className={`w-full py-2 px-4 rounded-md border border-[#b63f81] text-[#221e67] ${
               resendDisabled
-                ? "bg-gray-100 cursor-not-allowed opacity-70"
-                : "hover:bg-purple-50 focus:outline-none focus:ring-2"
+                ? 'bg-gray-100 cursor-not-allowed opacity-70'
+                : 'hover:bg-purple-50 focus:outline-none focus:ring-2'
             } transition-colors`}
           >
-            {resendDisabled ? `Resend OTP in ${resendTimer}s` : "Resend OTP"}
+            {resendDisabled ? `Resend OTP in ${resendTimer}s` : 'Resend OTP'}
           </button>
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default OtpInput
+export default OtpInput;

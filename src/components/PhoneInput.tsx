@@ -1,33 +1,36 @@
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { isValidNcellNumber, linearGradientClass } from "../../utils"
+import { useState } from 'react';
+import { isValidNcellNumber, linearGradientClass } from '../../utils';
 
 interface PhoneInputProps {
-  onSubmit: (phone: string) => void
+  onSubmit: (phone: string) => void;
 }
 
 const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
-  const [phone, setPhone] = useState("")
-  const [error, setError] = useState("")
+  const [phone, setPhone] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!isValidNcellNumber(phone)) {
-      setError("Please enter a valid Ncell phone number")
-      return
+      setError('Please enter a valid Ncell phone number');
+      return;
     }
 
-    setError("")
-    onSubmit(phone)
-  }
+    setError('');
+    onSubmit(phone);
+  };
 
   return (
     <div>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <div className="mb-4">
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="phone"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Phone Number *
           </label>
 
@@ -40,7 +43,9 @@ const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
               type="tel"
               id="phone"
               value={phone}
-              onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+              onChange={e =>
+                setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))
+              }
               className="flex-1 block w-full rounded-r-md border-gray-300 border p-2 focus:border-purple-500 focus:ring-purple-500"
               placeholder="9XXXXXXXXX"
             />
@@ -57,7 +62,7 @@ const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default PhoneInput
+export default PhoneInput;

@@ -10,4 +10,13 @@ export default defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"], languageOptions: { globals: globals.browser } },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  {
+    rules: {
+      "react/react-in-jsx-scope": "off",
+      'no-console': 'warn', // Ensure consistency for TypeScript files
+      semi: ['warn', 'never'], // Warn on missing semicolons
+      quotes: ['warn', 'single'], // Warn on double quotes, enforce single quotes
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    }
+  }
 ]);
