@@ -1,20 +1,20 @@
-# Build stage
-FROM node:24-alpine AS builder
 
+FROM node:24-alpine
+
+# Set working directory
 WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
-RUN npm ci
 
+# Install dependencies with force to handle optional dependencies
+RUN npm install --frozen-lockfile
+
+# Copy source code
 COPY . .
-RUN npm run build
 
-# Production stage with nginx
-FROM nginx:alpine
+# Expose port
+EXPOSE 5173
 
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 8080
-
-CMD ["nginx", "-g", "daemon off;"]
+# Start development server
+CMD ["npm", "run", "dev"]
