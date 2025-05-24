@@ -1,124 +1,130 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react';
 
 interface NcellCenter {
-  id: number
-  name: string
-  address: string
-  phone: string
-  openingHours: string
-  latitude: number
-  longitude: number
+  id: number;
+  name: string;
+  address: string;
+  phone: string;
+  openingHours: string;
+  latitude: number;
+  longitude: number;
 }
 
 const NcellCenters = () => {
-  const [centers, setCenters] = useState<NcellCenter[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
-  const [selectedProvince, setSelectedProvince] = useState("all")
+  const [centers, setCenters] = useState<NcellCenter[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [selectedProvince, setSelectedProvince] = useState('all');
 
   // Mock data - replace with actual API call
   useEffect(() => {
     // Simulate API call
     const fetchCenters = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
 
         // Replace with your actual API endpoint
         // const response = await fetch('https://your-backend-api.com/ncell-centers');
         // const data = await response.json();
 
-        // Using mock data for now
         const mockData: NcellCenter[] = [
           {
             id: 1,
-            name: "Ncell Center Kathmandu",
-            address: "Durbar Marg, Kathmandu",
-            phone: "9801234567",
-            openingHours: "10:00 AM - 6:00 PM",
+            name: 'Ncell Center Kathmandu',
+            address: 'Durbar Marg, Kathmandu',
+            phone: '9801234567',
+            openingHours: '10:00 AM - 6:00 PM',
             latitude: 27.7172,
             longitude: 85.324,
           },
           {
             id: 2,
-            name: "Ncell Center Pokhara",
-            address: "Lakeside, Pokhara",
-            phone: "9807654321",
-            openingHours: "10:00 AM - 6:00 PM",
+            name: 'Ncell Center Pokhara',
+            address: 'Lakeside, Pokhara',
+            phone: '9807654321',
+            openingHours: '10:00 AM - 6:00 PM',
             latitude: 28.2096,
             longitude: 83.9856,
           },
           {
             id: 3,
-            name: "Ncell Center Chitwan",
-            address: "Bharatpur, Chitwan",
-            phone: "9812345678",
-            openingHours: "10:00 AM - 6:00 PM",
+            name: 'Ncell Center Chitwan',
+            address: 'Bharatpur, Chitwan',
+            phone: '9812345678',
+            openingHours: '10:00 AM - 6:00 PM',
             latitude: 27.5291,
             longitude: 84.3542,
           },
           {
             id: 4,
-            name: "Ncell Center Biratnagar",
-            address: "Main Road, Biratnagar",
-            phone: "9809876543",
-            openingHours: "10:00 AM - 6:00 PM",
+            name: 'Ncell Center Biratnagar',
+            address: 'Main Road, Biratnagar',
+            phone: '9809876543',
+            openingHours: '10:00 AM - 6:00 PM',
             latitude: 26.4525,
             longitude: 87.2718,
           },
           {
             id: 5,
-            name: "Ncell Center Butwal",
-            address: "Milanchowk, Butwal",
-            phone: "9814567890",
-            openingHours: "10:00 AM - 6:00 PM",
+            name: 'Ncell Center Butwal',
+            address: 'Milanchowk, Butwal',
+            phone: '9814567890',
+            openingHours: '10:00 AM - 6:00 PM',
             latitude: 27.6866,
             longitude: 83.4323,
           },
-        ]
+        ];
 
         setTimeout(() => {
-          setCenters(mockData)
-          setLoading(false)
-        }, 1000) // Simulate network delay
-      } catch (err) {
-        setError("Failed to load Ncell centers. Please try again later.")
-        setLoading(false)
+          setCenters(mockData);
+          setLoading(false);
+        }, 1000); // Simulate network delay
+      } catch {
+        setError('Failed to load Ncell centers. Please try again later.');
+        setLoading(false);
       }
-    }
+    };
 
-    fetchCenters()
-  }, [])
+    fetchCenters();
+  }, []);
 
   // Filter centers by province (this is a simplified example)
   const filteredCenters =
-    selectedProvince === "all"
+    selectedProvince === 'all'
       ? centers
-      : centers.filter((center) => {
+      : centers.filter(center => {
           // This is a simplified example. In a real app, you'd have province data
-          if (selectedProvince === "bagmati") {
-            return ["Kathmandu", "Chitwan"].some((loc) => center.address.includes(loc))
-          } else if (selectedProvince === "gandaki") {
-            return ["Pokhara"].some((loc) => center.address.includes(loc))
-          } else if (selectedProvince === "lumbini") {
-            return ["Butwal"].some((loc) => center.address.includes(loc))
-          } else if (selectedProvince === "province1") {
-            return ["Biratnagar"].some((loc) => center.address.includes(loc))
+          if (selectedProvince === 'bagmati') {
+            return ['Kathmandu', 'Chitwan'].some(loc =>
+              center.address.includes(loc)
+            );
+          } else if (selectedProvince === 'gandaki') {
+            return ['Pokhara'].some(loc => center.address.includes(loc));
+          } else if (selectedProvince === 'lumbini') {
+            return ['Butwal'].some(loc => center.address.includes(loc));
+          } else if (selectedProvince === 'province1') {
+            return ['Biratnagar'].some(loc => center.address.includes(loc));
           }
-          return false
-        })
+          return false;
+        });
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-center mb-6 text-purple-700">Ncell Centers</h1>
+      <h1 className="text-2xl font-bold text-center mb-6 text-purple-700">
+        Ncell Centers
+      </h1>
 
       <div className="mb-4">
-        <label htmlFor="province" className="block text-sm font-medium text-gray-700 mb-1">
+        <label
+          htmlFor="province"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           Filter by Province
         </label>
         <select
           id="province"
           value={selectedProvince}
-          onChange={(e) => setSelectedProvince(e.target.value)}
+          onChange={e => setSelectedProvince(e.target.value)}
           className="w-full rounded-md border-gray-300 border p-2 focus:border-purple-500 focus:ring-purple-500"
         >
           <option value="all">All Provinces</option>
@@ -136,12 +142,19 @@ const NcellCenters = () => {
       ) : error ? (
         <div className="p-4 bg-red-100 text-red-700 rounded-md">{error}</div>
       ) : filteredCenters.length === 0 ? (
-        <div className="p-4 bg-yellow-100 text-yellow-800 rounded-md">No centers found in the selected province.</div>
+        <div className="p-4 bg-yellow-100 text-yellow-800 rounded-md">
+          No centers found in the selected province.
+        </div>
       ) : (
         <div className="space-y-4">
-          {filteredCenters.map((center) => (
-            <div key={center.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-              <h3 className="font-semibold text-lg text-purple-700">{center.name}</h3>
+          {filteredCenters.map(center => (
+            <div
+              key={center.id}
+              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+            >
+              <h3 className="font-semibold text-lg text-purple-700">
+                {center.name}
+              </h3>
               <div className="mt-2 space-y-1 text-sm">
                 <p className="flex items-start">
                   <svg
@@ -230,7 +243,7 @@ const NcellCenters = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default NcellCenters
+export default NcellCenters;
