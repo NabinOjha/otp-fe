@@ -21,7 +21,7 @@ function App() {
 
     try {
       await axios.post('http://localhost:3000/otp/send', {
-        data: { phone: phone },
+        phoneNumber: phone,
       });
       // console.log(response);
 
@@ -94,7 +94,6 @@ function App() {
     }
   };
 
-  // Countdown timer for OTP resend
   useEffect(() => {
     let interval: number | undefined;
 

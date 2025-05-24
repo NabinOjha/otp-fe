@@ -88,7 +88,6 @@ const NcellCenters = () => {
     fetchCenters();
   }, []);
 
-  // Filter centers by province (this is a simplified example)
   const filteredCenters =
     selectedProvince === 'all'
       ? centers
