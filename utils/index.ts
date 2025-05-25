@@ -18,5 +18,5 @@ const validNumber = (phoneNumber: string) => {
   return /^9\d{9}$/.test(phoneNumber)
 }
 
-export const linearGradientClass =
+export const bgnLinearGradientClass =
   'bg-[linear-gradient(90deg,_#f04e23_0%,_#f04e23_10%,_#f26322_30.55%,_#f6871f_76.87%,_#f7941d_99.95%,_#f7941d_100%)]'

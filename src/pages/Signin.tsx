@@ -3,8 +3,10 @@ import axios from 'axios';
 import PhoneInput from '../components/PhoneInput';
 import OtpInput from '../components/OtpInput';
 import { useNavigate } from 'react-router';
+import { useAuth } from '../context/AuthContext';
 
-function App() {
+function SignIn() {
+  const { refetchUser } = useAuth();
   const navigate = useNavigate();
 
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -37,12 +39,18 @@ function App() {
     setError('');
 
     try {
-      axios.put(`${import.meta.env.VITE_API_URL}/auth/verify-otp`, {
-        phoneNumber,
-        otp: otp,
-      });
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/auth/verify-otp`,
+        {
+          phoneNumber,
+          otp: otp,
+        },
+        { withCredentials: true }
+      );
 
-      navigate('/ncell-centers');
+      await refetchUser();
+
+      navigate('/', { replace: true });
     } catch (err) {
       setError(
         err instanceof Error
@@ -96,30 +104,26 @@ function App() {
   }, [resendDisabled, resendTimer]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDFDFD] px-4">
-      <div className="w-full max-w-md rounded-lg border border-gray-200 shadow-md p-6 bg-white">
-        <h1 className="text-2xl font-bold text-center mb-6">
-          Sign In With OTP
-        </h1>
-        {error && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
-            {error}
-          </div>
-        )}
+    <div className="w-full max-w-md rounded-lg border border-gray-200 shadow-md p-6 bg-white">
+      <h1 className="text-2xl font-bold text-center mb-6">Sign In With OTP</h1>
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+          {error}
+        </div>
+      )}
 
-        {!otpSent ? (
-          <PhoneInput onSubmit={handlePhoneSubmit} />
-        ) : (
-          <OtpInput
-            onVerify={handleOtpVerify}
-            onResend={handleResendOtp}
-            resendDisabled={resendDisabled}
-            resendTimer={resendTimer}
-          />
-        )}
-      </div>
+      {!otpSent ? (
+        <PhoneInput onSubmit={handlePhoneSubmit} />
+      ) : (
+        <OtpInput
+          onVerify={handleOtpVerify}
+          onResend={handleResendOtp}
+          resendDisabled={resendDisabled}
+          resendTimer={resendTimer}
+        />
+      )}
     </div>
   );
 }
 
-export default App;
+export default SignIn;

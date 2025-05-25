@@ -1,7 +1,7 @@
 import type React from 'react';
 
 import { useState } from 'react';
-import { isValidNcellNumber, linearGradientClass } from '../../utils';
+import { isValidNcellNumber, bgnLinearGradientClass } from '../../utils';
 
 interface PhoneInputProps {
   onSubmit: (phone: string) => void;
@@ -56,7 +56,7 @@ const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
 
         <button
           type="submit"
-          className={`w-full ${linearGradientClass} text-white font-bold py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-0 cursor-pointer transition-colors`}
+          className={`w-full ${bgnLinearGradientClass} text-white font-bold py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-0 cursor-pointer transition-colors`}
         >
           Get OTP
         </button>

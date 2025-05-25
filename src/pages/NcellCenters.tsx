@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Loader from '../components/Loader';
 
 interface NcellCenter {
   id: number;
@@ -108,7 +109,7 @@ const NcellCenters = () => {
         });
 
   return (
-    <div>
+    <div className="w-full">
       <h1 className="text-2xl font-bold text-center mb-6 text-purple-700">
         Ncell Centers
       </h1>
@@ -135,9 +136,7 @@ const NcellCenters = () => {
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-700"></div>
-        </div>
+        <Loader />
       ) : error ? (
         <div className="p-4 bg-red-100 text-red-700 rounded-md">{error}</div>
       ) : filteredCenters.length === 0 ? (
