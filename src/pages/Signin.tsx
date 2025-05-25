@@ -60,30 +60,23 @@ function SignIn() {
     }
   };
 
-  // Handle OTP resend
   const handleResendOtp = async () => {
     if (resendDisabled) return;
 
     try {
-      // Replace with your actual API endpoint
-      const response = await fetch('https://your-backend-api.com/resend-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ phoneNumber }),
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/send-otp`, {
+        phoneNumber: phoneNumber,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setResendDisabled(true);
-        setResendTimer(60);
-      } else {
-        setError(data.message || 'Failed to resend OTP. Please try again.');
-      }
-    } catch {
-      setError('Network error. Please check your connection and try again.');
+      setOtpSent(true);
+      setResendDisabled(true);
+      setResendTimer(60);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Network error. Please check your connection and try again.'
+      );
     }
   };
 
