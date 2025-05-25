@@ -19,4 +19,4 @@ const validNumber = (phoneNumber: string) => {
 }
 
 export const linearGradientClass =
-  'bg-[linear-gradient(90deg,_#221e67_0%,_#5e1f70_24.95%,_#7a2976_48.4%,_#a3387d_82.83%,_#b63f81_100%)]'
+  'bg-[linear-gradient(90deg,_#f04e23_0%,_#f04e23_10%,_#f26322_30.55%,_#f6871f_76.87%,_#f7941d_99.95%,_#f7941d_100%)]'

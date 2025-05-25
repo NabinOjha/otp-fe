@@ -1,70 +1,54 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import PhoneInput from './components/PhoneInput';
 import OtpInput from './components/OtpInput';
 import NcellCenters from './components/NcellCenters';
 import './App.css';
-import axios from 'axios';
 
 function App() {
-  // Authentication states
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [otpSent, _setOtpSent] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
   const [resendDisabled, setResendDisabled] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
   const [error, setError] = useState('');
 
-  // Handle phone number submission
   const handlePhoneSubmit = async (phone: string) => {
     setError('');
     setPhoneNumber(phone);
 
     try {
-      await axios.post('http://localhost:3000/otp/send', {
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/send-otp`, {
         phoneNumber: phone,
       });
-      // console.log(response);
-
-      // const data = { message: "Some message"}
-
-      //   if (response) {
-      //     setOtpSent(true)
-      //     setResendDisabled(true)
-      //     setResendTimer(60)
-      //   } else {
-      //     setError(data.message || "Failed to send OTP. Please try again.")
-      //   }
-    } catch {
-      // console.log('Error', err);
-      // setError("Network error. Please check your connection and try again.")
+      setOtpSent(true);
+      setResendDisabled(true);
+      setResendTimer(60);
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : 'Network error. Please check your connection and try again.'
+      );
     }
   };
 
-  // Handle OTP verification
-  const handleOtpVerify = async (_otp: string) => {
+  const handleOtpVerify = async (otp: string) => {
     setError('');
-    setIsLoggedIn(true);
 
-    // try {
-    //   // Replace with your actual API endpoint
-    //   const response = await fetch("https://your-backend-api.com/verify-otp", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ phoneNumber, otp }),
-    //   })
-
-    //   const data = await response.json()
-
-    //   if (response.ok) {
-    //     setIsLoggedIn(true)
-    //   } else {
-    //     setError(data.message || "Invalid OTP. Please try again.")
-    //   }
-    // } catch (err) {
-    //   setError("Network error. Please check your connection and try again.")
-    // }
+    try {
+      axios.put(`${import.meta.env.VITE_API_URL}/auth/verify-otp`, {
+        phoneNumber,
+        otp: otp,
+      });
+      setIsLoggedIn(true);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Network error. Please check your connection and try again.'
+      );
+    }
   };
 
   // Handle OTP resend
@@ -111,7 +95,7 @@ function App() {
   }, [resendDisabled, resendTimer]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDFDFD]">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDFDFD] px-4">
       <div className="w-full max-w-md rounded-lg border border-gray-200 shadow-md p-6 bg-white">
         {!isLoggedIn ? (
           <>

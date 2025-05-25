@@ -25,7 +25,7 @@ const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <div className="mb-4">
           <label
             htmlFor="phone"
@@ -35,8 +35,8 @@ const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
           </label>
 
           <div className="flex">
-            <div className="flex items-center justify-center bg-gray-100 px-3 rounded-l-md border border-r-0 border-gray-300">
-              <span className="text-gray-500">+977</span>
+            <div className="flex items-center justify-center px-2 rounded-l-md border border-r-0 border-gray-300">
+              <span className="text-[#6A2C91] font-bold">+977</span>
             </div>
 
             <input
@@ -47,7 +47,7 @@ const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
                 setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))
               }
               className="flex-1 block w-full rounded-r-md border-gray-300 border p-2 focus:border-purple-500 focus:ring-purple-500"
-              placeholder="9XXXXXXXXX"
+              placeholder="Enter mobile number"
             />
           </div>
 
@@ -56,7 +56,7 @@ const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
 
         <button
           type="submit"
-          className={`w-full ${linearGradientClass} text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-0 cursor-pointer transition-colors`}
+          className={`w-full ${linearGradientClass} text-white font-bold py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-0 cursor-pointer transition-colors`}
         >
           Get OTP
         </button>
