@@ -17,7 +17,7 @@ export default function Sidebar() {
   } = useMap();
 
   return (
-    <div className="w-[350px] flex flex-col gap-6">
+    <div className="flex w-full md:max-w-[300px] lg:max-w-[375px] flex-col gap-6">
       <div className="flex flex-col gap-6">
         <div>
           <Select

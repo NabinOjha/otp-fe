@@ -52,6 +52,8 @@ function SignIn({ resendTime = 2 }: { resendTime: number }) {
 
       navigate('/', { replace: true });
     } catch (err) {
+      //eslint-disable-next-line no-console
+      console.log(err);
       setError(
         err instanceof Error
           ? err.message
@@ -97,7 +99,7 @@ function SignIn({ resendTime = 2 }: { resendTime: number }) {
   }, [resendDisabled, resendTimer]);
 
   return (
-    <div className="w-md rounded-lg border border-gray-200 shadow-md p-6 bg-white">
+    <div className="w-md rounded-lg border border-gray-200 shadow-md p-3 md:p-6 bg-white">
       <h1 className="text-2xl font-bold text-center mb-6">Sign In With OTP</h1>
       {error && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">

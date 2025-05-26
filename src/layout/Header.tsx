@@ -17,14 +17,14 @@ export default function Header() {
         <p className="font-bold text-4xl cursor-pointer">Ncell</p>
         {user ? (
           <div className="flex gap-6 items-center">
-            <p>{user?.phone}</p>
+            <p className="hidden md:block">{user?.phone}</p>
             <button
               onClick={async () => {
                 await signOut();
                 navigate('/sign-in', { replace: true });
               }}
               className={
-                'w-full bg-white text-black font-bold py-2 px-4 rounded-md   focus:outline-none focus:ring-0 cursor-pointer transition-colors'
+                'w-full bg-white text-black font-bold py-2 px-4 rounded-md   ocus:outline-none focus:ring-0 cursor-pointer transition-colors'
               }
             >
               Sign Out

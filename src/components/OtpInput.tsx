@@ -110,7 +110,7 @@ const OtpInput = ({
                 onChange={e => handleChange(index, e.target.value)}
                 onKeyDown={e => handleKeyDown(index, e)}
                 onPaste={index === 0 ? handlePaste : undefined}
-                className="w-12 h-12 text-center text-xl font-semibold border border-gray-300 rounded-md focus:border-purple-500 focus:ring-purple-500"
+                className="w-8 h-8 md:w-12 md:h-12 text-center text-xl font-semibold border border-gray-300 rounded-md focus:border-purple-500 focus:ring-purple-500"
                 required
               />
             ))}

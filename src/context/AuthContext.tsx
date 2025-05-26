@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(response.data);
       }
     } catch (err) {
+      //eslint-disable-next-line no-console
+      console.log('Fetch user', err);
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
