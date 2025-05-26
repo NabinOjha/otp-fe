@@ -21,7 +21,7 @@ function App() {
                 path="/sign-in"
                 element={
                   <PublicRoute>
-                    <SignIn />
+                    <SignIn resendTime={60} />
                   </PublicRoute>
                 }
               />

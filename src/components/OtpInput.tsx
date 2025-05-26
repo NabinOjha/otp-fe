@@ -130,7 +130,7 @@ const OtpInput = ({
           <button
             type="button"
             onClick={onResend}
-            disabled={resendDisabled}
+            disabled={resendDisabled ? true : false}
             className={`w-full py-2 px-4 rounded-md border border-[#b63f81] text-[#221e67] ${
               resendDisabled
                 ? 'bg-gray-100 cursor-not-allowed opacity-70'

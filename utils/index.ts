@@ -1,5 +1,6 @@
 export const isValidNcellNumber = (phoneNumber: string): boolean => {
-  if (!validNumber(phoneNumber)) return false
+  // if (!validNumber(phoneNumber)) return false
+  return true
 
   // remove this
   return true

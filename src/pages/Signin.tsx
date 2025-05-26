@@ -5,14 +5,14 @@ import OtpInput from '../components/OtpInput';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 
-function SignIn() {
+function SignIn({ resendTime = 2 }: { resendTime: number }) {
   const { refetchUser } = useAuth();
   const navigate = useNavigate();
 
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [resendDisabled, setResendDisabled] = useState(false);
-  const [resendTimer, setResendTimer] = useState(0);
+  const [resendTimer, setResendTimer] = useState(resendTime);
   const [error, setError] = useState('');
 
   const handlePhoneSubmit = async (phone: string) => {
@@ -25,7 +25,7 @@ function SignIn() {
       });
       setOtpSent(true);
       setResendDisabled(true);
-      setResendTimer(60);
+      setResendTimer(resendTime);
     } catch (error) {
       setError(
         error instanceof Error
@@ -70,7 +70,7 @@ function SignIn() {
 
       setOtpSent(true);
       setResendDisabled(true);
-      setResendTimer(60);
+      setResendTimer(resendTime);
     } catch (err) {
       setError(
         err instanceof Error
@@ -81,7 +81,7 @@ function SignIn() {
   };
 
   useEffect(() => {
-    let interval: number | undefined;
+    let interval: ReturnType<typeof window.setInterval> | undefined;
 
     if (resendDisabled && resendTimer > 0) {
       interval = setInterval(() => {
