@@ -4,7 +4,6 @@
   .scrollbar::-webkit-scrollbar {
     width: 6px;
   }
-
   .scrollbar::-webkit-scrollbar-track {
     background: #D6D6D6;
     border-radius: 100vh;
