@@ -1,11 +1,11 @@
-import type { NcellCenter } from "../../ncell-centers";
+import type { NcellCenter } from '../../ncell-centers'
 
 export type SelectOption = {
   label: string;
   value: string;
 };
 
-export const MAX_ZOOM = 12;
+export const MAX_ZOOM = 12
 
 export type MapContextType = {
   mapRef: React.RefObject<HTMLDivElement | null>;
@@ -14,7 +14,7 @@ export type MapContextType = {
   setSelectedDistrict: React.Dispatch<React.SetStateAction<SelectOption>>;
   selectedDistrict: SelectOption | null;
   searchQuery: string;
-  handleCenterClick: (value: NcellCenter) => {};
+  handleCenterClick: (value: NcellCenter) => void;
   selectedCenter: NcellCenter | null;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   filteredCenters: NcellCenter[];
