@@ -97,7 +97,7 @@ function SignIn() {
   }, [resendDisabled, resendTimer]);
 
   return (
-    <div className="w-full max-w-md rounded-lg border border-gray-200 shadow-md p-6 bg-white">
+    <div className="w-md rounded-lg border border-gray-200 shadow-md p-6 bg-white">
       <h1 className="text-2xl font-bold text-center mb-6">Sign In With OTP</h1>
       {error && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
