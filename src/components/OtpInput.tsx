@@ -1,7 +1,7 @@
 import type React from 'react';
 
 import { useState, useRef, useEffect } from 'react';
-import { linearGradientClass } from '../../utils';
+import { bgnLinearGradientClass } from '../../utils';
 
 interface OtpInputProps {
   onVerify: (otp: string) => void;
@@ -122,7 +122,7 @@ const OtpInput = ({
         <div className="flex flex-col gap-3">
           <button
             type="submit"
-            className={`w-full ${linearGradientClass} bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-0 transition-colors`}
+            className={`w-full ${bgnLinearGradientClass} bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-0 transition-colors`}
           >
             Verify OTP
           </button>
@@ -130,7 +130,7 @@ const OtpInput = ({
           <button
             type="button"
             onClick={onResend}
-            disabled={resendDisabled}
+            disabled={resendDisabled ? true : false}
             className={`w-full py-2 px-4 rounded-md border border-[#b63f81] text-[#221e67] ${
               resendDisabled
                 ? 'bg-gray-100 cursor-not-allowed opacity-70'

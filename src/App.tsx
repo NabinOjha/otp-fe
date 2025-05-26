@@ -1,145 +1,45 @@
-import { useState, useEffect } from 'react';
-import PhoneInput from './components/PhoneInput';
-import OtpInput from './components/OtpInput';
-import NcellCenters from './components/NcellCenters';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+
+import SignIn from './pages/Signin';
+import NcellCenters from './pages/NcellCenters';
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
+import { AuthProvider } from './context/AuthContext';
+import Header from './layout/Header';
+
 import './App.css';
-import axios from 'axios';
 
 function App() {
-  // Authentication states
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [otpSent, _setOtpSent] = useState(false);
-  const [resendDisabled, setResendDisabled] = useState(false);
-  const [resendTimer, setResendTimer] = useState(0);
-  const [error, setError] = useState('');
-
-  // Handle phone number submission
-  const handlePhoneSubmit = async (phone: string) => {
-    setError('');
-    setPhoneNumber(phone);
-
-    try {
-      await axios.post('http://localhost:3000/otp/send', {
-        phoneNumber: phone,
-      });
-      // console.log(response);
-
-      // const data = { message: "Some message"}
-
-      //   if (response) {
-      //     setOtpSent(true)
-      //     setResendDisabled(true)
-      //     setResendTimer(60)
-      //   } else {
-      //     setError(data.message || "Failed to send OTP. Please try again.")
-      //   }
-    } catch {
-      // console.log('Error', err);
-      // setError("Network error. Please check your connection and try again.")
-    }
-  };
-
-  // Handle OTP verification
-  const handleOtpVerify = async (_otp: string) => {
-    setError('');
-    setIsLoggedIn(true);
-
-    // try {
-    //   // Replace with your actual API endpoint
-    //   const response = await fetch("https://your-backend-api.com/verify-otp", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ phoneNumber, otp }),
-    //   })
-
-    //   const data = await response.json()
-
-    //   if (response.ok) {
-    //     setIsLoggedIn(true)
-    //   } else {
-    //     setError(data.message || "Invalid OTP. Please try again.")
-    //   }
-    // } catch (err) {
-    //   setError("Network error. Please check your connection and try again.")
-    // }
-  };
-
-  // Handle OTP resend
-  const handleResendOtp = async () => {
-    if (resendDisabled) return;
-
-    try {
-      // Replace with your actual API endpoint
-      const response = await fetch('https://your-backend-api.com/resend-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ phoneNumber }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setResendDisabled(true);
-        setResendTimer(60);
-      } else {
-        setError(data.message || 'Failed to resend OTP. Please try again.');
-      }
-    } catch {
-      setError('Network error. Please check your connection and try again.');
-    }
-  };
-
-  useEffect(() => {
-    let interval: number | undefined;
-
-    if (resendDisabled && resendTimer > 0) {
-      interval = setInterval(() => {
-        setResendTimer(prev => prev - 1);
-      }, 1000);
-    } else if (resendTimer === 0) {
-      setResendDisabled(false);
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [resendDisabled, resendTimer]);
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDFDFD]">
-      <div className="w-full max-w-md rounded-lg border border-gray-200 shadow-md p-6 bg-white">
-        {!isLoggedIn ? (
-          <>
-            <h1 className="text-2xl font-bold text-center mb-6">
-              Sign In With OTP
-            </h1>
-            {error && (
-              <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
-                {error}
-              </div>
-            )}
-
-            {!otpSent ? (
-              <PhoneInput onSubmit={handlePhoneSubmit} />
-            ) : (
-              <OtpInput
-                onVerify={handleOtpVerify}
-                onResend={handleResendOtp}
-                resendDisabled={resendDisabled}
-                resendTimer={resendTimer}
+    <BrowserRouter>
+      <AuthProvider>
+        <div className="min-h-screen flex flex-col items-center bg-[#F9F9F9]">
+          <Header />
+          <div className="max-w-7xl w-full mx-auto mt-6 flex items-center justify-center px-4 min-h-[calc(100vh-100px)]">
+            <Routes>
+              <Route
+                path="/sign-in"
+                element={
+                  <PublicRoute>
+                    <SignIn resendTime={60} />
+                  </PublicRoute>
+                }
               />
-            )}
-          </>
-        ) : (
-          <NcellCenters />
-        )}
-      </div>
-    </div>
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <NcellCenters />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
+        </div>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
