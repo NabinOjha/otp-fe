@@ -2,8 +2,6 @@ export const isValidNcellNumber = (phoneNumber: string): boolean => {
   if (!validNumber(phoneNumber)) return false
   return true
 
-  // remove this
-
   const cleanedNumber = phoneNumber.replace(/\D/g, '')
   if (cleanedNumber.length !== 10) {
     return false
