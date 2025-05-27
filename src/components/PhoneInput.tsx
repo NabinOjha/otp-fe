@@ -15,7 +15,7 @@ const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
     e.preventDefault();
 
     if (!isValidNcellNumber(phone)) {
-      setError('Please enter a valid Ncell phone number');
+      setError('Please enter a valid phone number');
       return;
     }
 

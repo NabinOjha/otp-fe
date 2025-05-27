@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import PhoneInput from '../components/PhoneInput';
 import OtpInput from '../components/OtpInput';
 import { useNavigate } from 'react-router';
@@ -28,8 +28,8 @@ function SignIn({ resendTime = 2 }: { resendTime: number }) {
       setResendTimer(resendTime);
     } catch (error) {
       setError(
-        error instanceof Error
-          ? error.message
+        error instanceof AxiosError
+          ? error?.response?.data?.message
           : 'Network error. Please check your connection and try again.'
       );
     }
@@ -55,8 +55,8 @@ function SignIn({ resendTime = 2 }: { resendTime: number }) {
       //eslint-disable-next-line no-console
       console.log(err);
       setError(
-        err instanceof Error
-          ? err.message
+        err instanceof AxiosError
+          ? err?.response?.data?.message
           : 'Network error. Please check your connection and try again.'
       );
     }
@@ -75,8 +75,8 @@ function SignIn({ resendTime = 2 }: { resendTime: number }) {
       setResendTimer(resendTime);
     } catch (err) {
       setError(
-        err instanceof Error
-          ? err.message
+        err instanceof AxiosError
+          ? err?.response?.data?.message
           : 'Network error. Please check your connection and try again.'
       );
     }

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import React from 'react';
 import { createContext, useContext, useState, useEffect } from 'react';
 
@@ -40,7 +40,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(
+        err instanceof AxiosError
+          ? err?.response?.data?.message
+          : 'An error occurred'
+      );
     } finally {
       setLoading(false);
     }
@@ -59,7 +63,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(null);
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error while signing out');
+      setError(
+        err instanceof AxiosError
+          ? err?.response?.data?.message
+          : 'Error while signing out'
+      );
     }
   };
 
