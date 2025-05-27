@@ -9,6 +9,10 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
+RUN npm install -g @sentry/cli
+
+RUN sentry-cli sourcemaps upload /app/dist
+
 # Production stage with nginx
 FROM nginx:alpine
 
