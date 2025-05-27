@@ -13,7 +13,6 @@ const PhoneInput = ({ onSubmit }: PhoneInputProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    throw new Error('This is your first error!');
 
     if (!isValidNcellNumber(phone)) {
       setError('Please enter a valid Ncell phone number');
