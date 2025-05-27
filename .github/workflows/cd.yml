@@ -16,6 +16,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -e
             cd /root/otp-fe
             docker compose down -v
             git pull origin main --rebase
