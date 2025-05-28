@@ -33,7 +33,7 @@ describe('SignIn Component', () => {
 
     // Fill phone number input
     const phoneInput = screen.getByLabelText(/phone number/i);
-    fireEvent.change(phoneInput, { target: { value: '9861574495' } });
+    fireEvent.change(phoneInput, { target: { value: '9801574495' } });
 
     // Click on the "Get OTP" button
     fireEvent.click(screen.getByRole('button', { name: /Get OTP/i }));
@@ -54,7 +54,7 @@ describe('SignIn Component', () => {
 
     // Fill phone number input
     const phoneInput = screen.getByLabelText(/phone number/i);
-    fireEvent.change(phoneInput, { target: { value: '9861574495' } });
+    fireEvent.change(phoneInput, { target: { value: '9801574495' } });
 
     // Click on "Get OTP" button to send OTP
     fireEvent.click(screen.getByRole('button', { name: /Get OTP/i }));
@@ -91,7 +91,7 @@ describe('SignIn Component', () => {
 
     // Fill phone number input
     const phoneInput = screen.getByLabelText(/phone number/i);
-    fireEvent.change(phoneInput, { target: { value: '9861574495' } });
+    fireEvent.change(phoneInput, { target: { value: '9801574495' } });
 
     fireEvent.click(screen.getByRole('button', { name: /Get OTP/i }));
 
