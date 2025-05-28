@@ -18,6 +18,5 @@ jobs:
           script: |
             set -e
             cd /root/otp-fe
-            docker compose down -v
             git pull origin main --rebase
             docker compose -f docker-compose.prod.yml up -d --build
