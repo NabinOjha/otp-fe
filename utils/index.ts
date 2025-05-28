@@ -6,8 +6,8 @@ export const isValidNcellNumber = (phoneNumber: string): boolean => {
     return false
   }
 
-  // Check if the number starts with Ncell prefixes (980, 981, 982)
-  const validPrefixes = ['980', '981', '982']
+  // Check if the number starts with Ncell prefixes
+  const validPrefixes = ['980', '981', '982', "983", "970", "971", "972", "983"]
   return validPrefixes.some(prefix => cleanedNumber.startsWith(prefix))
 }
 
