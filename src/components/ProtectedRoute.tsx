@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   if (loading) return <Loader />;
 
-  if (!user) {
+  if (!user?.id) {
     return <Navigate to="/sign-in" replace />;
   }
 
