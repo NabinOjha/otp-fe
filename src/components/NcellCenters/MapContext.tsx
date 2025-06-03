@@ -116,9 +116,8 @@ export const MapProvider = ({ children }: MapContextProviderProps) => {
         }
       );
 
-      const centerIndex = filteredCenters.findIndex(
-        l => l.name === center.name
-      );
+      const centerIndex = centers.findIndex(l => l.id === center.id);
+
       if (centerIndex >= 0 && markersRef.current[centerIndex]) {
         markersRef.current[centerIndex].openPopup();
       }
